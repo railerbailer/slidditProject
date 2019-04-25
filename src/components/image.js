@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { Icon, Dropdown, Menu, message } from "antd";
 
-const Image = props => {
-  const [isDropDownShowing, setDropDown] = useState(false);
-  const {
-    className,
-    src,
-    toggleFullscreen,
-    index,
-    ratioClassName,
-    toggleIsModalVisible,
-    addMediaToCollection,
-    firebaseId,
-    fullscreen
-  } = props;
-
-  const menu = () => {
-    let collections = props.collections;
+class Image extends Component {
+  state = {
+    isDropDownShowing: false
+  };
+  setDropDown = value => {
+    this.setState({ isDropDownShowing: value });
+  };
+  menu = () => {
+    const {
+      className,
+      src,
+      toggleFullscreen,
+      index,
+      ratioClassName,
+      toggleIsModalVisible,
+      addMediaToCollection,
+      firebaseId,
+      fullscreen,
+      collections
+    } = this.props;
     const lists = Object.keys(collections).reverse();
     const srcKey = className === "gif" ? "url" : "low";
     const listMenuItem = lists.map(list => (
@@ -24,7 +28,7 @@ const Image = props => {
         key={list}
         onClick={() => {
           addMediaToCollection({ [firebaseId]: { [className]: { className: ratioClassName, [srcKey]: src } } }, list);
-          setDropDown(false);
+          this.setDropDown(false);
           message.info(`Added to collection ${list}`);
         }}
       >
@@ -35,7 +39,7 @@ const Image = props => {
       <Menu>
         <h4 style={{ marginLeft: "4px" }}>
           <Icon type="bars" /> Add to collection
-          <Icon onClick={() => setDropDown(false)} type="close" />
+          <Icon onClick={() => this.setDropDown(false)} type="close" />
         </h4>
 
         {!lists.length && (
@@ -48,42 +52,55 @@ const Image = props => {
       </Menu>
     );
   };
+  render() {
+    const { isDropDownShowing } = this.state;
+    const {
+      className,
+      src,
+      toggleFullscreen,
+      index,
+      ratioClassName,
+      toggleIsModalVisible,
+      addMediaToCollection,
+      firebaseId,
+      fullscreen
+    } = this.props;
+    return (
+      <React.Fragment>
+        <img
+          onClick={() => {
+            this.this.setDropDown(false);
+            toggleFullscreen(index);
+          }}
+          alt="Could not be loaded"
+          className={className}
+          // ref={img => (this.img = img)}
+          src={src}
+        />
 
-  return (
-    <React.Fragment>
-      <img
-        onClick={() => {
-          setDropDown(false);
-          toggleFullscreen(index);
-        }}
-        alt="Could not be loaded"
-        className={className}
-        // ref={img => (this.img = img)}
-        src={src}
-      />
-
-      <Dropdown
-        overlayStyle={{ zIndex: fullscreen ? 1231231231231231 : 2 }}
-        overlayClassName="mediaAddDropdown"
-        placement="topRight"
-        visible={isDropDownShowing}
-        overlay={menu()}
-      >
-        <div
-          style={{ zIndex: fullscreen ? 1231231231231231 : 2 }}
-          onClick={() => setDropDown(!isDropDownShowing)}
-          className="addNewMediaIcon"
-          onBlur={() => setDropDown(false)}
+        <Dropdown
+          overlayStyle={{ zIndex: fullscreen ? 1231231231231231 : 2 }}
+          overlayClassName="mediaAddDropdown"
+          placement="topRight"
+          visible={isDropDownShowing}
+          overlay={this.menu()}
         >
-          <Icon
+          <div
             style={{ zIndex: fullscreen ? 1231231231231231 : 2 }}
+            onClick={() => this.setDropDown(!isDropDownShowing)}
             className="addNewMediaIcon"
-            type={isDropDownShowing ? "up" : "plus"}
-          />
-        </div>
-      </Dropdown>
-    </React.Fragment>
-  );
-};
+            onBlur={() => this.setDropDown(false)}
+          >
+            <Icon
+              style={{ zIndex: fullscreen ? 1231231231231231 : 2 }}
+              className="addNewMediaIcon"
+              type={isDropDownShowing ? "up" : "plus"}
+            />
+          </div>
+        </Dropdown>
+      </React.Fragment>
+    );
+  }
+}
 
 export default Image;
