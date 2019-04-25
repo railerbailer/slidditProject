@@ -89,171 +89,171 @@ class AddMarkup extends Component {
     return url.match(/(?<=.[a-z]\/)([^.].*?)(?=[.|\/])/g).join("");
   };
 
-  renderHtml = () => {
-    const {
-      isOnlyPicsShowing,
-      isOnlyGifsShowing,
-      mobile,
-      fullscreen,
-      dataSource,
-      addMediaToCollection,
-      collections
-    } = this.props;
-    let filteredData;
-    if (mobile) filteredData = dataSource.filter(item => !item.gif);
-    if (isOnlyPicsShowing) filteredData = dataSource.filter(item => !item.video).filter(item => !item.gif);
-    else if (isOnlyGifsShowing) filteredData = dataSource.filter(item => !item.image);
-    else if (isOnlyPicsShowing && isOnlyGifsShowing) filteredData = dataSource;
-    else filteredData = dataSource;
-    html = filteredData
-      .filter(item => Object.entries(item).length !== 0)
-      .map((data, i) => {
-        const { gif, image, video, thumbnail } = data;
-        const size = {
-          superTall: 645,
-          veryTall: 645,
-          rectangular: 385,
-          superWide: 255,
-          veryWide: 255
-        };
-        if (image) {
-          const source = mobile
-            ? image.low || image.high || thumbnail
-            : image.high || image.low || image.source || thumbnail;
-          const imageId = this.getIdFromUrl(source);
-          return (
-            <div
-              key={i}
-              ref={el => (this[`gridElement${i}`] = el)}
-              className={`gridElement pics ${image.className}`}
-              // onClick={() => {
-              //   !fullscreen && this.getElementIndex(i, this[`gridElement${i}`]);
-              // }}
-            >
-              <LazyLoad
-                unmountIfInvisible={true}
-                //             placeholder={
-                //               <div style={{ height: `${size[image.className]}px` }}>
-                //                 <svg xmlns="http://www.w3.org/2000/svg">
-                //                   <path
-                //                     fill="#FFF"
-                //                     d="M45.6,16.9l0-11.4c0-3-1.5-5.5-4.5-5.5L3.5,0C0.5,0,0,1.5,0,4.5l0,13.4c0,3,0.5,4.5,3.5,4.5l37.6,0
-                // C44.1,22.4,45.6,19.9,45.6,16.9z M31.9,21.4l-23.3,0l2.2-2.6l14.1,0L31.9,21.4z M34.2,21c-3.8-1-7.3-3.1-7.3-3.1l0-13.4l7.3-3.1
-                // C34.2,1.4,37.1,11.9,34.2,21z M6.9,1.5c0-0.9,2.3,3.1,2.3,3.1l0,13.4c0,0-0.7,1.5-2.3,3.1C5.8,19.3,5.1,5.8,6.9,1.5z M24.9,3.9
-                // l-14.1,0L8.6,1.3l23.3,0L24.9,3.9z"
-                //                   />
-                //                 </svg>
-                //               </div>
-                //             }
-                height={size[image.className]}
-                offset={800}
-                throttle={250}
-                key={i}
-              >
-                <Image
-                  firebaseId={imageId}
-                  toggleIsModalVisible={this.props.toggleIsModalVisible}
-                  ratioClassName={image.className}
-                  index={i}
-                  toggleFullscreen={this.getElementIndex}
-                  addMediaToCollection={addMediaToCollection}
-                  collections={collections}
-                  className="image"
-                  key={`image${i}`}
-                  fullscreen={fullscreen}
-                  src={source}
-                />
-              </LazyLoad>
-            </div>
-          );
-        }
-        if (video) {
-          const videoId = this.getIdFromUrl(video.url);
-          return (
-            <div
-              // onClick={() => {
-              //   !fullscreen && this.getElementIndex(i, this[`gridElement${i}`]);
-              // }}
-              key={i}
-              ref={el => (this[`gridElement${i}`] = el)}
-              className={`gridElement gifs ${video.className}`}
-            >
-              <LazyLoad
-                unmountIfInvisible={true}
-                // placeholder={
-                //   <Spin
-                //     style={{
-                //       height: `${size[video.className]}px`
-                //     }}
-                //   />
-                // }
-                throttle={250}
-                height={size[video.className]}
-                offset={800}
-                key={i}
-              >
-                <Video
-                  firebaseId={videoId}
-                  toggleIsModalVisible={this.props.toggleIsModalVisible}
-                  className="video"
-                  ratioClassName={video.className}
-                  index={i}
-                  toggleFullscreen={this.getElementIndex}
-                  addMediaToCollection={addMediaToCollection}
-                  collections={collections}
-                  key={`video${i}`}
-                  mobile={mobile}
-                  src={video.url}
-                  fullscreen={fullscreen}
-                  poster={video.image || thumbnail}
-                />
-              </LazyLoad>
-            </div>
-          );
-        }
-        if (gif && !mobile) {
-          const gifId = this.getIdFromUrl(gif.url);
-          return (
-            <div
-              key={i}
-              ref={el => (this[`gridElement${i}`] = el)}
-              className={`gridElement gifs ${gif.className}`}
-              // onClick={() => {
-              //   !fullscreen && this.getElementIndex(i, this[`gridElement${i}`]);
-              // }}
-            >
-              <LazyLoad
-                unmountIfInvisible={true}
-                // placeholder={
-                //   <Spin
-                //     style={{
-                //       height: `${size[gif.className]}px`
-                //     }}
-                //   />
-                // }
-                throttle={250}
-                height={size[gif.className]}
-                offset={800}
-                key={i}
-              >
-                <Image
-                  firebaseId={gifId}
-                  toggleIsModalVisible={this.props.toggleIsModalVisible}
-                  ratioClassName={gif.className}
-                  index={i}
-                  toggleFullscreen={this.getElementIndex}
-                  addMediaToCollection={this.props.addMediaToCollection}
-                  collections={collections}
-                  className={`gif`}
-                  src={gif.url}
-                />
-              </LazyLoad>
-            </div>
-          );
-        }
-        return null;
-      });
-  };
+  // renderHtml = () => {
+  //   const {
+  //     isOnlyPicsShowing,
+  //     isOnlyGifsShowing,
+  //     mobile,
+  //     fullscreen,
+  //     dataSource,
+  //     addMediaToCollection,
+  //     collections
+  //   } = this.props;
+  //   let filteredData;
+  //   if (mobile) filteredData = dataSource.filter(item => !item.gif);
+  //   if (isOnlyPicsShowing) filteredData = dataSource.filter(item => !item.video).filter(item => !item.gif);
+  //   else if (isOnlyGifsShowing) filteredData = dataSource.filter(item => !item.image);
+  //   else if (isOnlyPicsShowing && isOnlyGifsShowing) filteredData = dataSource;
+  //   else filteredData = dataSource;
+  //   html = filteredData
+  //     .filter(item => Object.entries(item).length !== 0)
+  //     .map((data, i) => {
+  //       const { gif, image, video, thumbnail } = data;
+  //       const size = {
+  //         superTall: 645,
+  //         veryTall: 645,
+  //         rectangular: 385,
+  //         superWide: 255,
+  //         veryWide: 255
+  //       };
+  //       if (image) {
+  //         const source = mobile
+  //           ? image.low || image.high || thumbnail
+  //           : image.high || image.low || image.source || thumbnail;
+  //         const imageId = this.getIdFromUrl(source);
+  //         return (
+  //           <div
+  //             key={i}
+  //             ref={el => (this[`gridElement${i}`] = el)}
+  //             className={`gridElement pics ${image.className}`}
+  //             // onClick={() => {
+  //             //   !fullscreen && this.getElementIndex(i, this[`gridElement${i}`]);
+  //             // }}
+  //           >
+  //             <LazyLoad
+  //               unmountIfInvisible={true}
+  //               //             placeholder={
+  //               //               <div style={{ height: `${size[image.className]}px` }}>
+  //               //                 <svg xmlns="http://www.w3.org/2000/svg">
+  //               //                   <path
+  //               //                     fill="#FFF"
+  //               //                     d="M45.6,16.9l0-11.4c0-3-1.5-5.5-4.5-5.5L3.5,0C0.5,0,0,1.5,0,4.5l0,13.4c0,3,0.5,4.5,3.5,4.5l37.6,0
+  //               // C44.1,22.4,45.6,19.9,45.6,16.9z M31.9,21.4l-23.3,0l2.2-2.6l14.1,0L31.9,21.4z M34.2,21c-3.8-1-7.3-3.1-7.3-3.1l0-13.4l7.3-3.1
+  //               // C34.2,1.4,37.1,11.9,34.2,21z M6.9,1.5c0-0.9,2.3,3.1,2.3,3.1l0,13.4c0,0-0.7,1.5-2.3,3.1C5.8,19.3,5.1,5.8,6.9,1.5z M24.9,3.9
+  //               // l-14.1,0L8.6,1.3l23.3,0L24.9,3.9z"
+  //               //                   />
+  //               //                 </svg>
+  //               //               </div>
+  //               //             }
+  //               height={size[image.className]}
+  //               offset={800}
+  //               throttle={250}
+  //               key={i}
+  //             >
+  //               <Image
+  //                 firebaseId={imageId}
+  //                 toggleIsModalVisible={this.props.toggleIsModalVisible}
+  //                 ratioClassName={image.className}
+  //                 index={i}
+  //                 toggleFullscreen={this.getElementIndex}
+  //                 addMediaToCollection={addMediaToCollection}
+  //                 collections={collections}
+  //                 className="image"
+  //                 key={`image${i}`}
+  //                 fullscreen={fullscreen}
+  //                 src={source}
+  //               />
+  //             </LazyLoad>
+  //           </div>
+  //         );
+  //       }
+  //       if (video) {
+  //         const videoId = this.getIdFromUrl(video.url);
+  //         return (
+  //           <div
+  //             // onClick={() => {
+  //             //   !fullscreen && this.getElementIndex(i, this[`gridElement${i}`]);
+  //             // }}
+  //             key={i}
+  //             ref={el => (this[`gridElement${i}`] = el)}
+  //             className={`gridElement gifs ${video.className}`}
+  //           >
+  //             <LazyLoad
+  //               unmountIfInvisible={true}
+  //               // placeholder={
+  //               //   <Spin
+  //               //     style={{
+  //               //       height: `${size[video.className]}px`
+  //               //     }}
+  //               //   />
+  //               // }
+  //               throttle={250}
+  //               height={size[video.className]}
+  //               offset={800}
+  //               key={i}
+  //             >
+  //               <Video
+  //                 firebaseId={videoId}
+  //                 toggleIsModalVisible={this.props.toggleIsModalVisible}
+  //                 className="video"
+  //                 ratioClassName={video.className}
+  //                 index={i}
+  //                 toggleFullscreen={this.getElementIndex}
+  //                 addMediaToCollection={addMediaToCollection}
+  //                 collections={collections}
+  //                 key={`video${i}`}
+  //                 mobile={mobile}
+  //                 src={video.url}
+  //                 fullscreen={fullscreen}
+  //                 poster={video.image || thumbnail}
+  //               />
+  //             </LazyLoad>
+  //           </div>
+  //         );
+  //       }
+  //       if (gif && !mobile) {
+  //         const gifId = this.getIdFromUrl(gif.url);
+  //         return (
+  //           <div
+  //             key={i}
+  //             ref={el => (this[`gridElement${i}`] = el)}
+  //             className={`gridElement gifs ${gif.className}`}
+  //             // onClick={() => {
+  //             //   !fullscreen && this.getElementIndex(i, this[`gridElement${i}`]);
+  //             // }}
+  //           >
+  //             <LazyLoad
+  //               unmountIfInvisible={true}
+  //               // placeholder={
+  //               //   <Spin
+  //               //     style={{
+  //               //       height: `${size[gif.className]}px`
+  //               //     }}
+  //               //   />
+  //               // }
+  //               throttle={250}
+  //               height={size[gif.className]}
+  //               offset={800}
+  //               key={i}
+  //             >
+  //               <Image
+  //                 firebaseId={gifId}
+  //                 toggleIsModalVisible={this.props.toggleIsModalVisible}
+  //                 ratioClassName={gif.className}
+  //                 index={i}
+  //                 toggleFullscreen={this.getElementIndex}
+  //                 addMediaToCollection={this.props.addMediaToCollection}
+  //                 collections={collections}
+  //                 className={`gif`}
+  //                 src={gif.url}
+  //               />
+  //             </LazyLoad>
+  //           </div>
+  //         );
+  //       }
+  //       return null;
+  //     });
+  // };
   render() {
     const { activeElement } = this.state;
     const { fullscreen, mobile, isLoadingMore, collectionsMode, activeCollection, isLoading } = this.props;
@@ -304,7 +304,7 @@ class AddMarkup extends Component {
                   } catch (error) {
                     console.log("error", error);
                   }
-                  this.renderHtml();
+                  // this.renderHtml();
                 }}
                 type="primary"
                 icon={this.props.isLoadingMore ? "loading" : "loading-3-quarters"}
