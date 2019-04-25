@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Route } from "react-router-dom";
+import React, { Component, Suspense, lazy } from "react";
+import trackerHoc from "./components/trackerHoc";
+import { carPath } from "./utils/carPath";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+const Scroller = lazy(() => import("./components/scroller"));
+const CollectionsScroller = lazy(() => import("./components/collectionsScroller"));
+const ChooseCategory = lazy(() => import("./components/chooseCategory"));
+const UserCollectionCards = lazy(() => import("./components/userCollectionCards"));
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <Suspense
+          fallback={
+            <div>
+              <div className="suspense">Just Sliddit...</div>
+              <svg className="mainSVG" xmlns="http://www.w3.org/2000/svg">
+                <path className="carRot" fill="#FFF" d={carPath} />
+              </svg>
+            </div>
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <Route path="/collections" exact component={trackerHoc(UserCollectionCards)} />
+          <Route path="/collections/:collection" exact component={trackerHoc(CollectionsScroller)} />
+          <Route path="/" exact component={trackerHoc(ChooseCategory)} />
+          <Route path="/subreddits/:subreddit" exact component={trackerHoc(Scroller)} />
+        </Suspense>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
