@@ -3,7 +3,7 @@ import Swipeable from "react-swipeable";
 import "antd/dist/antd.css";
 import "../App.css";
 import _ from "lodash";
-import AddMarkup from "./addMarkup";
+// import AddMarkup from "./addMarkup";
 import { Icon, message } from "antd";
 import "../App.css";
 import { dataHandler, shuffleArray, dataMapper } from "../utils/atomic";
@@ -46,35 +46,35 @@ class Scroller extends Component {
     }
   }
 
-  // componentWillMount() {
-  //   if (window.screen.availWidth < 800) this.setState({ mobile: true });
-  // }
-  // componentDidMount() {
-  //   this.props.firebase.auth.onAuthStateChanged(user => {
-  //     if (user) {
-  //       this.setState({ user: user });
-  //       this.props.firebase.db.ref(`users/${user.uid}`).on("value", snapshot => {
-  //         const collections = _.get(snapshot.val(), "collections", {});
-  //         snapshot.val() && this.setState({ userCollections: collections });
-  //         // Object.values(snapshot.val().collections).some(collection => this.props.match.params.subreddit === collection)
-  //       });
-  //       // this.props.firebase.db.ref(`public`).on("value", snapshot => {
-  //       //   const collections = _.get(snapshot.val(), "collections", {});
-  //       //   const collectionsArray = _.flatMap(Object.values(collections).map(item => Object.values(item)));
-  //       //   this.setState({
-  //       //     publicCollections: collectionsArray
-  //       //   });
-  //       // });
-  //     } else {
-  //       this.setState({ user: null });
-  //     }
-  //   });
+  componentWillMount() {
+    if (window.screen.availWidth < 800) this.setState({ mobile: true });
+  }
+  componentDidMount() {
+    this.props.firebase.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user: user });
+        this.props.firebase.db.ref(`users/${user.uid}`).on("value", snapshot => {
+          const collections = _.get(snapshot.val(), "collections", {});
+          snapshot.val() && this.setState({ userCollections: collections });
+          // Object.values(snapshot.val().collections).some(collection => this.props.match.params.subreddit === collection)
+        });
+        // this.props.firebase.db.ref(`public`).on("value", snapshot => {
+        //   const collections = _.get(snapshot.val(), "collections", {});
+        //   const collectionsArray = _.flatMap(Object.values(collections).map(item => Object.values(item)));
+        //   this.setState({
+        //     publicCollections: collectionsArray
+        //   });
+        // });
+      } else {
+        this.setState({ user: null });
+      }
+    });
 
-  //   if (dataHandler("nsfw").includes(this.props.match.params.subreddit)) {
-  //     this.categorySet("nsfw");
-  //   }
-  //   this.props.match.params.subreddit && this.getSubreddit(this.props.match.params.subreddit);
-  // }
+    if (dataHandler("nsfw").includes(this.props.match.params.subreddit)) {
+      this.categorySet("nsfw");
+    }
+    this.props.match.params.subreddit && this.getSubreddit(this.props.match.params.subreddit);
+  }
 
   setSources = value => (sources = value);
   setNewListName = listName => this.setState({ newListName: listName });
@@ -275,7 +275,7 @@ class Scroller extends Component {
             </div>
           ) : (
             <React.Fragment>
-              {sources.length && (
+              {/* {sources.length && (
                 <AddMarkup
                   toggleIsModalVisible={this.toggleIsModalVisible}
                   activeCollection={this.state.activeCollection}
@@ -293,7 +293,7 @@ class Scroller extends Component {
                   isLoading={isLoading}
                   isLoadingMore={isLoadingMore}
                 />
-              )}
+              )} */}
               <div style={{ opacity: isSearchActivated ? 0.1 : 1 }} className="subredditNameDiv">
                 <h2 className="subredditName">
                   {activeCollection.length ? activeCollection : subreddit} <Icon type="tag-o" />
