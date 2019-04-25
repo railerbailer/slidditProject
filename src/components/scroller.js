@@ -3,7 +3,7 @@ import Swipeable from "react-swipeable";
 import "antd/dist/antd.css";
 import "../App.css";
 import _ from "lodash";
-// import AddMarkup from "./addMarkup";
+import AddMarkup from "./addMarkup";
 import { Icon, message } from "antd";
 import "../App.css";
 import { dataHandler, shuffleArray, dataMapper } from "../utils/atomic";
@@ -275,7 +275,7 @@ class Scroller extends Component {
             </div>
           ) : (
             <React.Fragment>
-              {/* {sources.length && (
+              {sources.length && (
                 <AddMarkup
                   toggleIsModalVisible={this.toggleIsModalVisible}
                   activeCollection={this.state.activeCollection}
@@ -293,7 +293,7 @@ class Scroller extends Component {
                   isLoading={isLoading}
                   isLoadingMore={isLoadingMore}
                 />
-              )} */}
+              )}
               <div style={{ opacity: isSearchActivated ? 0.1 : 1 }} className="subredditNameDiv">
                 <h2 className="subredditName">
                   {activeCollection.length ? activeCollection : subreddit} <Icon type="tag-o" />

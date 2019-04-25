@@ -8,21 +8,20 @@ import Swipeable from "react-swipeable";
 import { carPath } from "../utils/carPath";
 let html = [];
 class AddMarkup extends Component {
-  // const [html, setHtml] = useState([]);
   state = {
     activeElement: 0
   };
 
-  componentDidUpdate(prevProps) {
-    const { activeElement } = this.state;
-    if (this.props.fullscreen !== prevProps.fullscreen) {
-      console.log("didupdate");
-      this[`gridElement${activeElement}`] &&
-        this[`gridElement${activeElement}`].scrollIntoView({
-          block: "center"
-        });
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   const { activeElement } = this.state;
+  //   if (this.props.fullscreen !== prevProps.fullscreen) {
+  //     console.log("didupdate");
+  //     this[`gridElement${activeElement}`] &&
+  //       this[`gridElement${activeElement}`].scrollIntoView({
+  //         block: "center"
+  //       });
+  //   }
+  // }
   setActiveElement = value => {
     this.setState({ activeElement: value });
   };
