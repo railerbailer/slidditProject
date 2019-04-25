@@ -275,25 +275,23 @@ class Scroller extends Component {
             </div>
           ) : (
             <React.Fragment>
-              {sources.length && (
-                <AddMarkup
-                  toggleIsModalVisible={this.toggleIsModalVisible}
-                  activeCollection={this.state.activeCollection}
-                  collections={userCollections}
-                  addMediaToCollection={this.addMediaToCollection}
-                  isSearchActivated={isSearchActivated}
-                  toggleFullscreen={this.toggleFullscreen}
-                  toggleIsLoading={this.toggleIsLoading}
-                  mobile={mobile}
-                  isOnlyGifsShowing={isOnlyGifsShowing}
-                  isOnlyPicsShowing={isOnlyPicsShowing}
-                  fullscreen={fullscreenActive}
-                  dataSource={sources}
-                  loadMore={this.moreSubreddits}
-                  isLoading={isLoading}
-                  isLoadingMore={isLoadingMore}
-                />
-              )}
+              <AddMarkup
+                toggleIsModalVisible={this.toggleIsModalVisible}
+                activeCollection={this.state.activeCollection}
+                collections={userCollections}
+                addMediaToCollection={this.addMediaToCollection}
+                isSearchActivated={isSearchActivated}
+                toggleFullscreen={this.toggleFullscreen}
+                toggleIsLoading={this.toggleIsLoading}
+                mobile={mobile}
+                isOnlyGifsShowing={isOnlyGifsShowing}
+                isOnlyPicsShowing={isOnlyPicsShowing}
+                fullscreen={fullscreenActive}
+                dataSource={sources}
+                loadMore={this.moreSubreddits}
+                isLoading={isLoading}
+                isLoadingMore={isLoadingMore}
+              />
               <div style={{ opacity: isSearchActivated ? 0.1 : 1 }} className="subredditNameDiv">
                 <h2 className="subredditName">
                   {activeCollection.length ? activeCollection : subreddit} <Icon type="tag-o" />
