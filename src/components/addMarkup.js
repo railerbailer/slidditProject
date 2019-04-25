@@ -12,16 +12,16 @@ class AddMarkup extends Component {
     activeElement: 0
   };
 
-  // componentDidUpdate(prevProps) {
-  //   const { activeElement } = this.state;
-  //   if (this.props.fullscreen !== prevProps.fullscreen) {
-  //     console.log("didupdate");
-  //     this[`gridElement${activeElement}`] &&
-  //       this[`gridElement${activeElement}`].scrollIntoView({
-  //         block: "center"
-  //       });
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    const { activeElement } = this.state;
+    if (this.props.fullscreen !== prevProps.fullscreen) {
+      console.log("didupdate");
+      this[`gridElement${activeElement}`] &&
+        this[`gridElement${activeElement}`].scrollIntoView({
+          block: "center"
+        });
+    }
+  }
   setActiveElement = value => {
     this.setState({ activeElement: value });
   };
@@ -257,7 +257,7 @@ class AddMarkup extends Component {
   render() {
     const { activeElement } = this.state;
     const { fullscreen, mobile, isLoadingMore, collectionsMode, activeCollection, isLoading } = this.props;
-    this.renderHtml();
+    // this.renderHtml();
     return (
       <Swipeable
         onKeyDown={e => this.handleKeyDown(e)}
